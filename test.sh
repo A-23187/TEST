@@ -12,6 +12,9 @@ whoami
 #echo 'restart sshd'
 #systemctl restart sshd
 
+echo 'which sshpass'
+which sshpass
+
 echo 'establish reverse connection'
 ssh -o 'StrictHostKeyChecking=no' -fNR 24661:localhost:22 a23187@hw.a23187.cn
   # -f run ssh and then exit, -N don't open remote shell, -R reverse connect
