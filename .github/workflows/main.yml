@@ -1,0 +1,13 @@
+name: test
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  main:
+    name: main
+    runs-on: ubuntu-latest
+    steps:
+      - name: run test.sh
+        run: bash test.sh
