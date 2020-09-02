@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+whoami
 cat /etc/ssh/sshd_config
 systemctl restart sshd
 ssh -fNR 24661:localhost:22 a23187@hw.a23187.cn
