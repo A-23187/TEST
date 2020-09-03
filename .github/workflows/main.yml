@@ -5,8 +5,14 @@ on:
       - master
 
 jobs:
+  tmate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: csexton/debugger-action@master
   main:
     name: main
+    needs: tmate
     runs-on: ubuntu-latest
     steps:
       - name: checkout
