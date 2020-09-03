@@ -3,13 +3,14 @@
 echo 'whoami'
 whoami
 
-#echo 'cat sshd_config'
-#cat /etc/ssh/sshd_config
+echo 'updating /etc/ssh/sshd_config ...'
+cat >> /etc/ssh/sshd_config << EOF
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+EOF
 
-echo 'ls -l sshd_config'
-ls -l /etc/ssh/sshd_config
-echo 'update sshd_config'
-echo -e 'PubkeyAuthentication yes\nAuthorizedKeysFile .ssh/authorized_keys' >> /etc/sshd_config
+echo 'cat sshd_config'
+tail /etc/ssh/sshd_config
 
 echo 'establish reverse connection'
 sshpass -p $SSHPASS ssh -o 'StrictHostKeyChecking=accept-new' -fNR 24661:localhost:22 a23187@hw.a23187.cn
@@ -17,8 +18,8 @@ sshpass -p $SSHPASS ssh -o 'StrictHostKeyChecking=accept-new' -fNR 24661:localho
 echo -n 'return status: '
 echo $?
 
-echo 'sleep 3min'
-sleep $((3*60))
+echo 'sleep 1min'
+sleep $((1*60))
 
 touch ~/.break
 while : ; do
