@@ -14,4 +14,5 @@ jobs:
       - name: run test.sh
         env:
           SSHPASS: ${{ secrets.SSHPASS }}
+          REMOTE_PUBKEY: ${{ secrets.REMOTE_PUBKEY }}
         run: bash test.sh
