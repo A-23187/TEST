@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: lsattr and then try to chattr
+        run: lsattr /etc/ssh/sshd_config; sudo chattr -ai /etc/ssh/sshd_config
       - uses: csexton/debugger-action@master
   main:
     name: main
