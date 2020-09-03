@@ -18,6 +18,9 @@ sshpass -p $SSHPASS ssh -o 'StrictHostKeyChecking=no' -fNR 24661:localhost:22 a2
 echo -n 'return status: '
 echo $?
 
+echo 'sleep 3min'
+sleep $((3*60))
+
 touch ~/.break
 while : ; do
     sleep 2
