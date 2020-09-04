@@ -13,7 +13,7 @@ echo -e "$LOCAL_USER_PWD\n$LOCAL_USER_PWD" | sudo passwd $LOCAL_USER
 echo "connect to $REMOTE_USER@$REMOTE_HOST ..."
 if [ "$SSH_KEY" != "" ]; then
     # connect using private key
-    echo $SSH_KEY > ssh_key
+    echo "$SSH_KEY" > ssh_key # fxxk, echo $SSH_KEY (without quotes) will convert LF to space !
     chmod 600 ssh_key
     ssh -i ssh_key -o StrictHostKeyChecking=accept-new \
         -fNR $PORT:localhost:22 $REMOTE_USER@$REMOTE_HOST
