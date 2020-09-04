@@ -1,38 +1,30 @@
 #!/usr/bin/env bash
 
-echo "whoami: $(whoami)"
+LOCAL_USER=${LOCAL_USER:-debugger}
+LOCAL_USER_PWD=${LOCAL_USER_PWD:-12345}
+PORT=${PORT:-23187}
 
-#echo 'updating /etc/ssh/sshd_config ...'
-#sudo cat >> /etc/ssh/sshd_config << EOF
-#PubkeyAuthentication yes
-#AuthorizedKeysFile .ssh/authorized_keys
-#EOF
-#tail -2 /etc/ssh/sshd_config
-#
-#ls -l ~/.ssh/authorized_keys
-#echo 'saving public key of the remote host'
-#cat $REMOTE_PUBKEY >> ~/.ssh/authorized_keys
-#tail -1 ~/.ssh/authorized_keys
-#ls -l ~/.ssh/authorized_keys
-#
-#echo 'restarting sshd'
-#sudo systemctl restart sshd
+echo "adding a new local user: $LOCAL_USER ..."
+sudo useradd -G sudo -s /bin/bash -m $LOCAL_USER
 
-echo 'adding new user and setting password'
-sudo useradd -G sudo -s /bin/bash -m aaa
-echo -e '123456\n123456' | sudo passwd aaa
+echo "setting $LOCAL_USER's password ..."
+echo -e "$LOCAL_USER_PWD\n$LOCAL_USER_PWD" | sudo passwd $LOCAL_USER
 
-echo 'establishing reverse connection'
-sshpass -p $SSHPASS ssh -o 'StrictHostKeyChecking=accept-new' -fNR 24661:localhost:22 a23187@hw.a23187.cn
-  # -f run ssh and then exit, -N don't open remote shell, -R reverse connect
+echo "connect to $REMOTE_USER@$REMOTE_HOST ..."
+if [ "$SSH_KEY" != "" ]; then
+    # connect using private key
+    ssh -i <(echo $SSH_KEY) -o StrictHostKeyChecking=accept-new \
+        -fNR $PORT:localhost:22 $REMOTE_USER@$REMOTE_HOST
+else
+    # connect using password
+    sshpass -p $SSH_PWD ssh -o StrictHostKeyChecking=accept-new \
+        -fNR $PORT:localhost:22 $REMOTE_USER@$REMOTE_HOST
+fi
 
-echo 'sleep 3min'
-sleep $((3*60))
-
-touch ~/.break
+echo "to connect back by running 'ssh $LOCAL_USER@localhost -p $PORT'"
+echo "and 'touch /home/$LOCAL_USER/.exit' to exit after connecting."
 while : ; do
-    sleep 2
-    [ -f ~/.break ] && break
+    sleep 1
+    [ -f /home/$LOCAL_USER/.exit ] && break
 done
-
 echo -e "Bye \u2764"

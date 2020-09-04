@@ -9,10 +9,15 @@ jobs:
     name: main
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
+      - name: Run actions/checkout@v2
         uses: actions/checkout@v2
-      - name: run test.sh
+      - name: Run test.sh
         env:
-          SSHPASS: ${{ secrets.SSHPASS }}
-          REMOTE_PUBKEY: ${{ secrets.REMOTE_PUBKEY }}
+          LOCAL_USER: a23187
+          LOCAL_USER_PWD: ${{ secrets.LOCAL_USER_PWD }}
+          PORT: 24661
+          REMOTE_USER: a23187
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SSH_PWD: ${{ secrets.SSH_PWD }}
         run: bash test.sh
