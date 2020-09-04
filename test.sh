@@ -19,15 +19,15 @@ echo "whoami: $(whoami)"
 #sudo systemctl restart sshd
 
 echo 'adding new user and setting password'
-sudo useradd -G sudo -s bin/bash -m aaa
+sudo useradd -G sudo -s /bin/bash -m aaa
 echo -e '123456\n123456' | sudo passwd aaa
 
 echo 'establishing reverse connection'
 sshpass -p $SSHPASS ssh -o 'StrictHostKeyChecking=accept-new' -fNR 24661:localhost:22 a23187@hw.a23187.cn
   # -f run ssh and then exit, -N don't open remote shell, -R reverse connect
 
-echo 'sleep 1min'
-sleep $((1*60))
+echo 'sleep 3min'
+sleep $((3*60))
 
 touch ~/.break
 while : ; do
