@@ -13,8 +13,11 @@ echo -e "$LOCAL_USER_PWD\n$LOCAL_USER_PWD" | sudo passwd $LOCAL_USER
 echo "connect to $REMOTE_USER@$REMOTE_HOST ..."
 if [ "$SSH_KEY" != "" ]; then
     # connect using private key
-    ssh -i <(echo $SSH_KEY) -o StrictHostKeyChecking=accept-new \
+    echo $SSH_KEY > ssh_key
+    chmod 600 ssh_key
+    ssh -i ssh_key -o StrictHostKeyChecking=accept-new \
         -fNR $PORT:localhost:22 $REMOTE_USER@$REMOTE_HOST
+    rm ssh_key
 else
     # connect using password
     sshpass -p $SSH_PWD ssh -o StrictHostKeyChecking=accept-new \
