@@ -1,0 +1,44 @@
+name: ssh-debug-action
+author: A23187
+description: an action to debug using ssh
+inputs:
+  local_user:
+    description: local user
+    required: false
+    default: debugger
+  local_user_pwd:
+    description: password for the local user
+    required: false
+    default: 12345
+  remote_user:
+    description: remote user
+    required: true
+  remote_host:
+    description: remote host
+    required: true
+  port:
+    description: the port that the remote host will listen on
+    required: false
+    default: 23187
+  ssh_key:
+    description: ssh private key used to connect to the remote host
+    required: false
+  ssh_pwd:
+    description: ssh password used to connect to the remote host
+    required: true
+runs:
+  using: composite
+  steps:
+    - env:
+        LOCAL_USER: ${{ inputs.local_user }}
+        LOCAL_USER_PWD: ${{ inputs.local_user_pwd }}
+        REMOTE_USER: ${{ inputs.remote_user }}
+        REMOTE_HOST: ${{ inputs.remote_host }}
+        PORT: ${{ inputs.port }}
+        SSH_KEY: ${{ inputs.ssh_key }}
+        SSH_PWD: ${{ inputs.ssh_pwd }}
+      run: $GITHUB_ACTION_PATH/script.sh
+      shell: bash
+branding:
+  color: red
+  icon: terminal

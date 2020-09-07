@@ -1,0 +1,22 @@
+name: test ssh-debug-action
+on:
+  push:
+    branches:
+      - master
+jobs:
+  main:
+    name: main
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run actions/checkout@v2
+        uses: actions/checkout@v2
+      - name: Run ssh-debug-action
+        uses: ./
+        with:
+          local_user: a23187
+          local_user_pwd: ${{ secrets.LOCAL_USER_PWD }}
+          remote_user: a23187
+          remote_host: ${{ secrets.REMOTE_HOST }}
+          port: 24661
+          ssh_key: ${{ secrets.SSH_KEY }}
+          ssh_pwd: ${{ secrets.SSH_PWD }}
