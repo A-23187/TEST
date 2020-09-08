@@ -26,6 +26,10 @@ inputs:
   ssh_pwd:
     description: ssh password used to connect to the remote host
     required: true
+  time:
+    description: how log to end this action
+    required: false
+    default: 15m
 runs:
   using: composite
   steps:
@@ -37,6 +41,7 @@ runs:
         PORT: ${{ inputs.port }}
         SSH_KEY: ${{ inputs.ssh_key }}
         SSH_PWD: ${{ inputs.ssh_pwd }}
+        TIME: ${{ inputs.time }}
       run: $GITHUB_ACTION_PATH/script.sh
       shell: bash
 branding:

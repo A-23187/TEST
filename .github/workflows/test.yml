@@ -20,3 +20,4 @@ jobs:
           port: 24661
           ssh_key: ${{ secrets.SSH_KEY }}
           ssh_pwd: ${{ secrets.SSH_PWD }}
+          time: 3m

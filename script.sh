@@ -25,9 +25,14 @@ else
 fi
 
 echo "To connect back by running 'ssh $LOCAL_USER@localhost -p $PORT'"
-echo "  and 'touch /home/$LOCAL_USER/.exit' to exit after connecting."
-while : ; do
-    sleep 1
-    [ -f /home/$LOCAL_USER/.exit ] && break
-done
+if [[ $TIME =~ ^0[smhd]?$ ]]; then
+    echo "  and 'touch /home/$LOCAL_USER/.exit' to exit after connecting."
+    while : ; do
+        sleep 1
+        [ -f /home/$LOCAL_USER/.exit ] && break
+    done
+else
+    echo "  and the connection will be closed after $TIME."
+    sleep $TIME
+fi
 echo -e "Bye \u2764"
