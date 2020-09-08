@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 LOCAL_USER=${LOCAL_USER:-debugger}
-LOCAL_USER_PWD=${LOCAL_USER_PWD:-12345}
+LOCAL_USER_PWD=${LOCAL_USER_PWD:-123456}
 PORT=${PORT:-23187}
 
 echo "Adding a new local user: $LOCAL_USER ..."

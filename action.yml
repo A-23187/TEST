@@ -9,7 +9,7 @@ inputs:
   local_user_pwd:
     description: password for the local user
     required: false
-    default: 12345
+    default: 123456
   remote_user:
     description: remote user
     required: true
